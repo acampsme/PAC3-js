@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
-import { ArticleItemComponent } from './article-item.component';
+import { ArticleList } from './article-list/article-list';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ArticleItemComponent],
+  imports: [ArticleList],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
 })

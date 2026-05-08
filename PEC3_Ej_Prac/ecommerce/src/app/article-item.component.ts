@@ -1,25 +1,28 @@
-import { Component, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Article } from './article.model';
+import { Article, ArticleQuantityChange } from './article.model';
 
 @Component({
   selector: 'app-article-item',
   standalone: true,
   imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <article class="article-card" [class.on-sale]="article().isOnSale">
-      <img class="article-image" [src]="article().imageUrl" [alt]="article().name" />
+    <article class="article-card" [class.on-sale]="article.isOnSale">
+      <img class="article-image" [src]="article.imageUrl" [alt]="article.name" />
 
       <div class="article-details">
-        <h2>{{ article().name }}</h2>
-        <p class="price" [ngClass]="{ 'disabled-price': !article().isOnSale }">Preu: {{ article().price | currency:'EUR':'symbol':'1.2-2' }}</p>
-        <p class="sale-status">{{ article().isOnSale ? 'Producte en venda' : 'No està en venda' }}</p>
+        <h2>{{ article.name }}</h2>
+        <p class="price" [ngClass]="{ 'disabled-price': !article.isOnSale }">
+          Preu: {{ article.price | currency:'EUR':'symbol':'1.2-2' }}
+        </p>
+        <p class="sale-status">{{ article.isOnSale ? 'Producte en venda' : 'No està en venda' }}</p>
 
-        <div *ngIf="article().isOnSale">
-          <p>Quantitat al carret: <strong>{{ article().quantityInCart }}</strong></p>
+        <div *ngIf="article.isOnSale">
+          <p>Quantitat al carret: <strong>{{ article.quantityInCart }}</strong></p>
 
           <div class="buttons">
-            <button type="button" (click)="decrement()" [disabled]="article().quantityInCart === 0">-</button>
+            <button type="button" (click)="decrement()" [disabled]="article.quantityInCart === 0">-</button>
             <button type="button" (click)="increment()">+</button>
           </div>
         </div>
@@ -122,25 +125,20 @@ import { Article } from './article.model';
   ],
 })
 export class ArticleItemComponent {
-  article = signal<Article>({
-    name: 'Motxilla taronja d’aventura',
-    imageUrl: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80',
-    price: 49.99,
-    isOnSale: false,
-    quantityInCart: 0,
-  });
+  @Input() article!: Article;
+  @Output() quantityChange = new EventEmitter<ArticleQuantityChange>();
 
   increment(): void {
-    this.article.update((current) => ({
-      ...current,
-      quantityInCart: current.quantityInCart + 1,
-    }));
+    this.quantityChange.emit({
+      article: this.article,
+      quantity: this.article.quantityInCart + 1,
+    });
   }
 
   decrement(): void {
-    this.article.update((current) => ({
-      ...current,
-      quantityInCart: Math.max(0, current.quantityInCart - 1),
-    }));
+    this.quantityChange.emit({
+      article: this.article,
+      quantity: Math.max(0, this.article.quantityInCart - 1),
+    });
   }
 }
