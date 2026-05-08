@@ -1,28 +1,36 @@
 <main class="app-shell">
   <section class="header">
     <h1>Botiga ecommerce</h1>
-    <p>Consulta els productes i ajusta la quantitat abans de comprar.</p>
+    <p>Consulta els productes o crea nous articles amb els diferents formularis.</p>
   </section>
 
-  <app-article-list></app-article-list>
+  <app-navbar [selectedView]="selectedView()" (viewChange)="onViewChange($event)"></app-navbar>
+
+  <section class="view-container">
+    <app-article-list *ngIf="selectedView() === 'list'"></app-article-list>
+    <app-article-new-template *ngIf="selectedView() === 'template'"></app-article-new-template>
+    <app-article-new-reactive *ngIf="selectedView() === 'reactive'"></app-article-new-reactive>
+  </section>
 </main>
 
 <style>
   .app-shell {
     min-height: 100vh;
     margin: 0;
-    padding: 2rem 1rem;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.75rem;
+    gap: 0;
     background: #f8fafc;
     color: #0f172a;
   }
 
   .header {
+    width: 100%;
+    padding: 1.5rem 1rem 0;
     text-align: center;
-    max-width: 720px;
+    max-width: 960px;
   }
 
   .header h1 {
@@ -34,5 +42,12 @@
     margin: 0.65rem auto 0;
     color: #475569;
     max-width: 620px;
+  }
+
+  .view-container {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
   }
 </style>
