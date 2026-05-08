@@ -1,4 +1,49 @@
+# PAC3-js
 
+## Estructura de carpetes del projecte
+
+```text
+PAC3-js/
+├── README.md
+├── LICENSE
+├── .gitignore
+├── PEC3_Ej_PrAc/
+│   └── ecommerce/
+│       ├── README.md
+│       ├── CHANGELOG.md
+│       ├── angular.json
+│       ├── package.json
+│       ├── package-lock.json
+│       ├── tsconfig.json
+│       ├── tsconfig.app.json
+│       ├── tsconfig.spec.json
+│       ├── .prettierrc
+│       ├── .editorconfig
+│       ├── .gitignore
+│       ├── .vscode/
+│       ├── src/
+│       │   ├── app/
+│       │   │   ├── app.ts
+│       │   │   ├── app.html
+│       │   │   ├── article.model.ts
+│       │   │   ├── article-item.component.ts
+│       │   │   ├── article-list/
+│       │   │   │   └── article-list.ts
+│       │   │   ├── article-new-template/
+│       │   │   │   └── article-new-template.ts
+│       │   │   ├── article-new-reactive/
+│       │   │   │   └── article-new-reactive.ts
+│       │   │   └── navbar/
+│       │   │       └── navbar.ts
+│       │   ├── assets/
+│       │   │   └── products/
+│       │   │       ├── product-1.jpg
+│       │   │       ├── product-2.jpg
+│       │   │       └── product-3.jpg
+│       │   └── styles.css
+│       └── ...altres fitxers de configuració i recursos
+└── ...altres fitxers o carpetes del repositori
+```
 
 ## Crear una aplicació Angular d'e-commerce
 - Generar el projecte base amb Angular CLI i configurar la carpeta `ecommerce`.
