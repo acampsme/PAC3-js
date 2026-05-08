@@ -136,9 +136,11 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
     }
 
     .error {
-      margin: 0;
+      display: block;
+      margin: 0.35rem 0 0;
       color: #b91c1c;
       font-size: 0.9rem;
+      line-height: 1.4;
     }
 
     .success {
