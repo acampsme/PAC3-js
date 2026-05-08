@@ -12,13 +12,16 @@ import { Article } from './article.model';
 
       <div class="article-details">
         <h2>{{ article().name }}</h2>
-        <p class="price">Preu: {{ article().price | currency:'EUR':'symbol':'1.2-2' }}</p>
+        <p class="price" [ngClass]="{ 'disabled-price': !article().isOnSale }">Preu: {{ article().price | currency:'EUR':'symbol':'1.2-2' }}</p>
         <p class="sale-status">{{ article().isOnSale ? 'Producte en venda' : 'No està en venda' }}</p>
-        <p>Quantitat al carret: <strong>{{ article().quantityInCart }}</strong></p>
 
-        <div class="buttons">
-          <button type="button" (click)="decrement()" [disabled]="article().quantityInCart === 0">-</button>
-          <button type="button" (click)="increment()">+</button>
+        <div *ngIf="article().isOnSale">
+          <p>Quantitat al carret: <strong>{{ article().quantityInCart }}</strong></p>
+
+          <div class="buttons">
+            <button type="button" (click)="decrement()" [disabled]="article().quantityInCart === 0">-</button>
+            <button type="button" (click)="increment()">+</button>
+          </div>
         </div>
       </div>
     </article>
@@ -70,6 +73,10 @@ import { Article } from './article.model';
         color: #334155;
       }
 
+      .disabled-price {
+        color: #94a3b8;
+      }
+
       .sale-status {
         margin: 0;
         color: #166534;
@@ -119,7 +126,7 @@ export class ArticleItemComponent {
     name: 'Motxilla taronja d’aventura',
     imageUrl: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80',
     price: 49.99,
-    isOnSale: true,
+    isOnSale: false,
     quantityInCart: 0,
   });
 
